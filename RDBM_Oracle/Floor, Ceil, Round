@@ -1,0 +1,20 @@
+-- id 가 1인 직원의 급여를 floor 함수 사용하여 내림
+select employee_id, employee_name, floor (salary) as f_salary 
+from salary_info
+where employee_id = 1;
+
+
+-- employee_id 가 2인 직원의 급여 ceil 함수를 사용해서 올림
+select employee_id, employee_name, ceil(salary) as c_salary
+from salary_info
+where employee_id = 2;
+
+-- employee_id 가 3인 직원의 급여를 round 함수를 사용해서 반올림
+select employee_id, employee_name, round(salary) as r_salary
+from salary_info
+where employee_id = 3;
+
+-- employee_id 가 4인 직원의 급여 floor 함수를 사용해서 내림
+select employee_id, employee_name, floor(salary) as f_salary
+from salary_info
+where employee_id = 4;

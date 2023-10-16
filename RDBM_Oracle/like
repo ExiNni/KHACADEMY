@@ -1,0 +1,32 @@
+--서울에 위치한 모든 카페 조회
+SELECT*FROM cafes WHERE address LIKE '%서울%';
+
+--메뉴가 아메리카노가 있는 카페 찾기:
+select c.NAME, m.menu_name
+from cafes c
+join menu m ON c.cafe_id = m.cafe_id
+where m.menu_name = '모카라떼';
+
+-- 주말에 운영되는 카페 목록
+select*from cafes where operating_hours LIKE '%주말%';
+
+--02를 포함하는 전화번호를 가지는 서울의 카페 찾기
+select*from cafes where cafes.phone_number like '%02%';
+
+--이름에 라떼가 포함된 카페 찾기
+select c.NAME, m.menu_name
+from cafes c
+join menu m ON c.cafe_id = m.cafe_id
+where m.menu_name like '%라떼%';
+
+-- 매일 운영되는 카페 찾기
+select*from cafes where cafes.operating_hours like '%매일%';
+
+-- 매일 운영되고 가격 4.00 미만의 카페 찾기
+select *
+from cafes c
+join menu m ON c.cafe_id = m.cafe_id
+where c.operating_hours like '%매일%' 
+AND m.price < 4;
+
+

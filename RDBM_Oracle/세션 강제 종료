@@ -1,0 +1,4 @@
+SELECT object_id, object_type FROM dba_objects WHERE object_name='테이블이름';
+SELECT * FROM v$locked_object WHERE object_id='STEP1에서 검색한 object_id';
+SELECT sid, serial#, command, taddr FROM v$session WHERE sid='STEP2의 세션 ID 번호';
+ALTER SYSTEM KILL SESSION 'description';

@@ -1,0 +1,76 @@
+-- 잔액이 1000 이상인 계좌의 계좌번호와 잔액 조회
+select account_number, balance
+from bank
+where balance >= 1000;
+
+-- 도시가 "서쪽지점" 인 계좌의 계좌 소유주 이름 조회
+select account_name, branch_name
+from bank
+where branch_name like '%서쪽지점%';
+
+-- 마지막 거래 날짜가 '2023-10-10' 이전인 계좌의 계좌번호와 마지막 거래 날짜를 조회
+select account_number, last_transaction_date
+from bank
+where last_transaction_date < '23-10-10';
+
+-- 잔액이 가장 큰 계좌의 계좌 번호와 잔액을 조회
+select account_number, balance
+from bank
+where balance = (select max(balance) from bank);
+-- 잔액이 500보다 작고 1000보다 큰 계좌의 소유주 이름 조회
+select account_name, balance
+from bank
+where balance < 1000 or balance > 500;
+
+-- 계좌번호가 1234567890 계좌의 잔액을 1500으로 업데이트 하기
+update bank
+set balance = 1500
+where account_number = '1234567890';
+
+-- 잔액이 2000이상인 계좌의 잔액을 10% 증가
+update bank
+set balance = balance * 1.10
+where balance >= 2000;
+
+-- 잔액이 0보다 작은 계좌가 있는지 확인
+select *
+from bank
+where balance < 5000;
+
+-- 마지막 거래 날짜가 가장 빠른 계좌의 소유주 이름 조회 (fetch 사용)
+select account_name, last_transaction_date
+from bank
+order by last_transaction_date desc
+fetch first 5 rows only;
+
+select  *
+from(
+    select bank.*,
+    dense_rank() over (order by last_transaction_date desc) as rnk 
+    from bank)
+where rnk = 1;   
+
+SELECT account_name, last_transaction_date
+FROM (
+  SELECT account_name, last_transaction_date,
+         RANK() OVER (ORDER BY last_transaction_date DESC) AS rnk
+  FROM bank
+)
+WHERE rnk = 1;
+
+-- 모든 계좌의 평균 잔액 계산
+select avg(balance) as 평균
+from bank;
+
+-- 도시가 남쪽지점인 계좌의 평균 잔액 계산
+select avg(balance)
+from bank
+where branch_name like '%남쪽지점%';
+
+-- 마지막 거래 날짜가 가장 빠른 계좌의 소유주 이름 조회 (fetch 사용)
+select account_name, last_transaction_date
+from(
+    select account_name, last_transaction_date,
+    rank() over (order by last_transaction_date desc) as rnk
+    from bank )
+where rnk = 1;

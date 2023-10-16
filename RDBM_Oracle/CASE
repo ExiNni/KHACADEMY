@@ -1,0 +1,35 @@
+-- 직원의 급여가 5000 이상인 경우 "고액"으로 표시, 그 외는 "보통" 으로 표시
+select ename, salary,
+case -- 여러 조건을 비교할 수 있고ㅡ 조건을 만족한는 경우 다른 결과 반환
+when salary >= 5000 then '고액' -- 급여가 5000이상인 경우 고액 반환
+else '보통' -- 위 조건에 해당하지 않는 경우 보통으로 반환
+end as salary_info -- end는 case 문의 끝을 나타내는 키워드
+                   -- as salary_info 새로 생성된 열애 별칭 부여
+from employee; -- employee 테이블에서
+
+select ename, job, salary, 
+case job
+when 'Manager' then salary * 0.5 -- 직급에 따라 보너스 계산
+when 'Developer' then salary * 0.1
+when 'Salesperson' then salary* 0.05
+else 0
+end as bonus
+from employee;
+
+-- 급여 범위 지정 5000이상 고액 3000이상 중간
+select ename, salary,
+case 
+when salary >= 5000 then '고액'
+when salary >= 3000 then '중간'
+else '보통'
+end as salary_info
+from employee;
+
+-- 직원의 입사한 연도에 따른 경력 계산
+select ename, hiredate,
+case
+when extract(year from hiredate) = 2023 then '1년 미만'
+when extract(year from hiredate) = 2022 then '1년'
+else '2년 이상'
+end as hiredate
+from employee;  
